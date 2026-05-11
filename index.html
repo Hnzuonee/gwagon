@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garáž | Investona</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .gold-gradient { background: linear-gradient(90deg, #d4af37 0%, #fcd34d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-gold { background: linear-gradient(90deg, #d4af37 0%, #fcd34d 100%); color: #0f172a; font-weight: bold; }
+        .btn-gold:hover { opacity: 0.9; }
+        input[type=range] { accent-color: #d4af37; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="max-w-xl w-full text-center mt-8 mb-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold uppercase tracking-tight mb-4">
+            Matematika <span class="gold-gradient">nelže.</span>
+        </h1>
+        <p class="text-lg text-slate-400">G-Wagon, nebo vlastní bydlení? Zjisti, za jak dlouho tě tam tvoje denní útrata dostane, když necháš peníze pracovat.</p>
+    </div>
+
+    <div class="max-w-xl w-full bg-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl border border-slate-700">
+        
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-slate-400 mb-2">Kolik odložíš denně? (Kč)</label>
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-2xl font-bold text-white" id="dailyAmountDisplay">100 Kč</span>
+                <span class="text-sm text-slate-500" id="monthlyAmountDisplay">= 3 000 Kč měsíčně</span>
+            </div>
+            <input type="range" id="dailyInput" min="50" max="1000" step="50" value="100" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+        </div>
+
+        <div class="mb-8">
+            <label class="block text-sm font-medium text-slate-400 mb-2">Za jak dlouho to chceš? (Roky)</label>
+            <span class="text-2xl font-bold text-white block mb-2" id="yearsDisplay">10 let</span>
+            <input type="range" id="yearsInput" min="5" max="40" step="1" value="10" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+        </div>
+
+        <div class="bg-slate-900 rounded-xl p-6 border border-slate-700 mb-8">
+            <p class="text-sm text-slate-400 mb-1">Při průměrném zhodnocení 8 % p.a. budeš mít:</p>
+            <div class="text-4xl font-extrabold gold-gradient mb-4" id="futureValueDisplay">548 838 Kč</div>
+            
+            <p class="text-xs text-slate-500 border-t border-slate-800 pt-4">
+                Peníze na běžném účtu (bez zhodnocení): <span id="cashValueDisplay" class="text-white font-semibold">360 000 Kč</span><br>
+                Zisk díky trhu: <span id="profitDisplay" class="text-emerald-400 font-semibold">188 838 Kč</span>
+            </p>
+        </div>
+
+        <div id="leadFormContainer" class="border-t border-slate-700 pt-8 mt-4">
+            <h3 class="text-xl font-bold mb-2">Chceš detailní mapu k cíli?</h3>
+            <p class="text-sm text-slate-400 mb-4">Tohle byla teorie. Zadej kontakt a náš analytik ti ukáže, do čeho přesně zainvestovat, abys tento model replikoval.</p>
+            
+            <form id="leadForm" class="flex flex-col gap-4">
+                <input type="email" id="email" placeholder="Tvůj e-mail" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500">
+                <input type="tel" id="phone" placeholder="Telefonní číslo" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500">
+                
+                <label class="flex items-start gap-3 mt-2 cursor-pointer">
+                    <input type="checkbox" required class="mt-1 w-4 h-4 accent-yellow-500">
+                    <span class="text-xs text-slate-500 leading-tight">
+                        Souhlasím s předáním mých kontaktních údajů a kalkulace společnosti Investona a.s. za účelem nabídky investičních produktů. Beru na vědomí, že investování nese riziko.
+                    </span>
+                </label>
+
+                <button type="submit" class="btn-gold w-full py-4 rounded-lg text-lg mt-2 transition-transform transform active:scale-95">Získat můj investiční plán</button>
+            </form>
+        </div>
+
+        <div id="successMessage" class="hidden text-center py-8">
+            <svg class="w-16 h-16 text-emerald-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <h3 class="text-2xl font-bold text-white mb-2">Data přijata</h3>
+            <p class="text-slate-400">Plán se generuje. Obchodník Investony se ti ozve do 24 hodin s přesnou strategií na tvých <span id="successTarget" class="text-yellow-400"></span>.</p>
+        </div>
+
+    </div>
+
+    <div class="max-w-xl w-full text-center mt-8 text-xs text-slate-600">
+        *Ilustrativní model. Předpokládá stabilní roční zhodnocení 8 % p.a. před zdaněním. Historické výnosy nejsou zárukou výnosů budoucích. Investování je rizikové a můžete přijít o část vložených prostředků. Tato stránka má edukativní charakter.
+    </div>
+
+    <script>
+        const dailyInput = document.getElementById('dailyInput');
+        const yearsInput = document.getElementById('yearsInput');
+        const dailyAmountDisplay = document.getElementById('dailyAmountDisplay');
+        const monthlyAmountDisplay = document.getElementById('monthlyAmountDisplay');
+        const yearsDisplay = document.getElementById('yearsDisplay');
+        const futureValueDisplay = document.getElementById('futureValueDisplay');
+        const cashValueDisplay = document.getElementById('cashValueDisplay');
+        const profitDisplay = document.getElementById('profitDisplay');
+        
+        // Fyzika trhu: 8% p.a.
+        const annualRate = 0.08; 
+
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(num);
+        }
+
+        function calculate() {
+            const daily = parseInt(dailyInput.value);
+            const years = parseInt(yearsInput.value);
+            const monthly = daily * 30; // Aproximace pro UI
+
+            dailyAmountDisplay.textContent = daily + ' Kč';
+            monthlyAmountDisplay.textContent = `= ${monthly.toLocaleString('cs-CZ')} Kč měsíčně`;
+            yearsDisplay.textContent = years + (years < 5 ? ' roky' : ' let');
+
+            const months = years * 12;
+            const monthlyRate = annualRate / 12;
+            
+            // Složené úročení
+            const futureValue = monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+            const cashValue = monthly * months;
+            const profit = futureValue - cashValue;
+
+            futureValueDisplay.textContent = formatCurrency(futureValue);
+            cashValueDisplay.textContent = formatCurrency(cashValue);
+            profitDisplay.textContent = formatCurrency(profit);
+        }
+
+        dailyInput.addEventListener('input', calculate);
+        yearsInput.addEventListener('input', calculate);
+        calculate(); // Init
+
+        // Mock API Handoff
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Zde by v reálu byl FETCH na Webhook/API CRM Investony s payloadem (email, telefon, daily_amount, years)
+            
+            document.getElementById('leadFormContainer').classList.add('hidden');
+            document.getElementById('successTarget').textContent = futureValueDisplay.textContent;
+            document.getElementById('successMessage').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
