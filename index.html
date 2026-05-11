@@ -5,23 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garáž Investona Klub | Level Up Tvým Financím</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #050509; color: #f8fafc; }
         .gold-gradient-text { background: linear-gradient(90deg, #b8860b 0%, #fcd34d 50%, #b8860b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .bg-gold-gradient { background: linear-gradient(135deg, #b8860b 0%, #fcd34d 100%); color: #050509; }
-        .card-premium { background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(148, 163, 184, 0.1); }
-        input[type=range] { accent-color: #fcd34d; cursor: pointer; }
+        .card-premium { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(148, 163, 184, 0.15); }
+        
+        /* Vylepšené slidery pro lepší kontrast */
+        input[type=range] { 
+            -webkit-appearance: none; 
+            width: 100%; 
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-thumb { 
+            -webkit-appearance: none; 
+            height: 24px; 
+            width: 24px; 
+            border-radius: 50%; 
+            background: #fcd34d; 
+            cursor: pointer; 
+            margin-top: -8px; 
+            box-shadow: 0 0 10px rgba(252, 211, 77, 0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track { 
+            width: 100%; 
+            height: 8px; 
+            cursor: pointer; 
+            background: #334155; 
+            border-radius: 4px; 
+        }
+
         .text-emerald-premium { color: #10b981; }
-        .progress-bg { background-color: rgba(148, 163, 184, 0.1); }
-        .progress-fill { background: linear-gradient(90deg, #b8860b 0%, #fcd34d 100%); transition: width 0.3s ease; }
+        .progress-bg { background-color: #334155; }
+        .progress-fill { background: linear-gradient(90deg, #b8860b 0%, #fcd34d 100%); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Custom styl pro skryté radio buttony (výběr aut) */
+        .car-selector input[type="radio"] { display: none; }
+        .car-selector label { transition: all 0.2s; border: 2px solid transparent; opacity: 0.6; }
+        .car-selector input[type="radio"]:checked + label { border-color: #fcd34d; opacity: 1; transform: scale(1.02); background: rgba(252, 211, 77, 0.1); }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-6 lg:p-8 flex flex-col items-center">
+<body class="min-h-screen p-4 md:p-6 lg:p-8 flex flex-col items-center overflow-x-hidden">
 
-    <header class="w-full max-w-7xl flex items-center justify-between mb-12">
+    <header class="w-full max-w-7xl flex items-center justify-between mb-8 md:mb-12">
         <div class="flex items-center gap-3">
-            <svg class="w-10 h-10" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="100" height="100" rx="20" fill="url(#paint0_linear_logo)"/>
                 <path d="M78 62H22C20.8954 62 20 61.1046 20 60V38C20 36.8954 20.8954 36 22 36H26.8521C27.6534 36 28.396 36.4674 28.7424 37.188L33 46H67L71.2576 37.188C71.604 36.4674 72.3466 36 73.1479 36H78C79.1046 36 80 36.8954 80 38V60C80 61.1046 79.1046 62 78 62Z" fill="#050509"/>
                 <circle cx="30" cy="62" r="8" fill="#050509" stroke="#fcd34d" stroke-width="4"/>
@@ -35,124 +64,151 @@
                 </defs>
             </svg>
             <div class="flex flex-col">
-                <span class="text-xl font-extrabold uppercase tracking-tight text-white leading-tight">Garáž</span>
-                <span class="text-xs gold-gradient-text font-semibold uppercase tracking-wider">Investona Klub</span>
+                <span class="text-xl md:text-2xl font-extrabold uppercase tracking-tight text-white leading-tight">Garáž</span>
+                <span class="text-[10px] md:text-xs gold-gradient-text font-bold uppercase tracking-widest">Investona Klub</span>
             </div>
         </div>
-        <button class="text-xs bg-slate-800 text-slate-300 px-4 py-2 rounded-full font-medium hover:bg-slate-700">Členství</button>
     </header>
 
-    <div class="w-full max-w-4xl text-center mb-16 relative p-8 card-premium rounded-3xl">
-        <img src="https://images.unsplash.com/photo-1621689025170-c081e7d23d91?q=80&w=800&auto=format&fit=crop" alt="Mercedes-Benz G-Wagon" class="absolute inset-0 w-full h-full object-cover opacity-10 rounded-3xl z-0">
-        
+    <div class="w-full max-w-5xl text-center mb-10 md:mb-16 relative p-6 md:p-12 card-premium rounded-3xl overflow-hidden">
         <div class="relative z-10">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tighter leading-tight mb-6">
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tighter leading-tight mb-4 md:mb-6">
                 Vyděláváš, ale pořád <span class="gold-gradient-text">jezdíš sockou?</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto">Přestaň pálit peníze za energetáky a skiny. Nech je pracovat pro tvůj <span class="text-white font-semibold">vysněný flex.</span> Matematika nelže, čas je tvůj spojenec.</p>
+            <p class="text-base md:text-xl text-slate-400 max-w-2xl mx-auto font-medium">Přestaň pálit peníze za hlouposti. Nech je pracovat pro tvůj <span class="text-white font-bold">vysněný flex.</span> Vyber si cíl a zjisti, jak tě tam dostane matematika.</p>
         </div>
     </div>
 
-    <div class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+    <div class="w-full max-w-7xl mb-8">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-slate-500 mb-4 text-center">Vyber si svůj cíl</h2>
+        <div class="flex flex-wrap justify-center gap-4 md:gap-6 car-selector">
+            
+            <div class="relative">
+                <input type="radio" name="carSelect" id="car-gwagon" value="gwagon" checked>
+                <label for="car-gwagon" class="flex flex-col items-center bg-slate-900 rounded-xl p-3 cursor-pointer w-36 md:w-48 shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1621689025170-c081e7d23d91?q=80&w=400&auto=format&fit=crop" class="w-full h-20 md:h-24 object-cover rounded-lg mb-3">
+                    <span class="text-xs md:text-sm font-bold text-white text-center">G-Wagon</span>
+                    <span class="text-[10px] text-slate-400">~3.8M Kč</span>
+                </label>
+            </div>
+
+            <div class="relative">
+                <input type="radio" name="carSelect" id="car-lambo" value="lambo">
+                <label for="car-lambo" class="flex flex-col items-center bg-slate-900 rounded-xl p-3 cursor-pointer w-36 md:w-48 shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1662691656816-17b2b2b3f2ec?q=80&w=400&auto=format&fit=crop" class="w-full h-20 md:h-24 object-cover rounded-lg mb-3">
+                    <span class="text-xs md:text-sm font-bold text-white text-center">Huracán</span>
+                    <span class="text-[10px] text-slate-400">~6.5M Kč</span>
+                </label>
+            </div>
+
+            <div class="relative">
+                <input type="radio" name="carSelect" id="car-porsche" value="porsche">
+                <label for="car-porsche" class="flex flex-col items-center bg-slate-900 rounded-xl p-3 cursor-pointer w-36 md:w-48 shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1503376712351-1f50a80e0c90?q=80&w=400&auto=format&fit=crop" class="w-full h-20 md:h-24 object-cover rounded-lg mb-3">
+                    <span class="text-xs md:text-sm font-bold text-white text-center">Porsche 911</span>
+                    <span class="text-[10px] text-slate-400">~3.2M Kč</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
         
-        <div class="lg:col-span-1 flex flex-col gap-8">
-            <div class="card-premium rounded-2xl p-8 border border-slate-800 shadow-2xl">
-                <h3 class="text-xl font-bold uppercase tracking-wide mb-8 gold-gradient-text">Tvoje investice</h3>
+        <div class="flex flex-col h-full">
+            <div class="card-premium rounded-2xl p-6 md:p-8 flex-grow flex flex-col justify-center">
+                <h3 class="text-lg font-bold uppercase tracking-widest mb-8 gold-gradient-text">Tvoje investice</h3>
                 
                 <div class="mb-10">
-                    <label class="block text-sm font-semibold tracking-wide uppercase text-slate-500 mb-3">Kolik odložíš denně?</label>
-                    <div class="flex items-end gap-2 mb-3">
-                        <span class="text-5xl font-extrabold text-white leading-none" id="dailyAmountDisplay">300 Kč</span>
-                        <span class="text-sm text-slate-500 pb-1" id="monthlyAmountDisplay">= 9 000 Kč / měsíc</span>
+                    <label class="block text-xs font-bold tracking-widest uppercase text-slate-400 mb-4">Kolik odložíš denně?</label>
+                    <div class="flex items-end gap-3 mb-4">
+                        <span class="text-4xl md:text-5xl font-extrabold text-white leading-none" id="dailyAmountDisplay">300 Kč</span>
                     </div>
-                    <input type="range" id="dailyInput" min="100" max="2000" step="100" value="300" class="w-full h-2 bg-slate-800 rounded-lg appearance-none">
+                    <span class="text-sm text-slate-500 font-medium block mb-4" id="monthlyAmountDisplay">= 9 000 Kč / měsíc</span>
+                    <input type="range" id="dailyInput" min="100" max="3000" step="100" value="300">
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold tracking-wide uppercase text-slate-500 mb-3">Za jak dlouho to chceš?</label>
-                    <div class="flex items-end gap-2 mb-3">
-                        <span class="text-5xl font-extrabold text-white leading-none" id="yearsDisplay">10 let</span>
+                <div>
+                    <label class="block text-xs font-bold tracking-widest uppercase text-slate-400 mb-4">Za jak dlouho to chceš?</label>
+                    <div class="flex items-end gap-3 mb-4">
+                        <span class="text-4xl md:text-5xl font-extrabold text-white leading-none" id="yearsDisplay">10 let</span>
                     </div>
-                    <input type="range" id="yearsInput" min="5" max="30" step="1" value="10" class="w-full h-2 bg-slate-800 rounded-lg appearance-none">
+                    <input type="range" id="yearsInput" min="3" max="30" step="1" value="10">
                 </div>
             </div>
         </div>
 
-        <div class="lg:col-span-1 flex flex-col gap-8">
-            <div class="card-premium rounded-2xl p-8 border border-slate-800 shadow-2xl flex-grow">
-                <h3 class="text-xl font-bold uppercase tracking-wide mb-8 gold-gradient-text">Tvůj potenciál (8 % p.a.)</h3>
-                
-                <div class="mb-10">
-                    <p class="text-sm font-semibold tracking-wide uppercase text-slate-500 mb-2">Budoucí hodnota</p>
-                    <div class="text-6xl font-extrabold gold-gradient-text leading-tight mb-2" id="futureValueDisplay">1 646 515 Kč</div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-6 border-t border-slate-800 pt-8 mt-4">
-                    <div>
-                        <p class="text-xs font-semibold tracking-wide uppercase text-slate-500 mb-1">Vložené peníze</p>
-                        <p class="text-2xl font-bold text-white" id="cashValueDisplay">1 080 000 Kč</p>
+        <div class="flex flex-col h-full">
+            <div class="card-premium rounded-2xl p-6 md:p-8 flex-grow flex flex-col justify-between relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-lg font-bold uppercase tracking-widest mb-6 gold-gradient-text">Tvůj potenciál (8 % p.a.)</h3>
+                    
+                    <div class="mb-8">
+                        <p class="text-xs font-bold tracking-widest uppercase text-slate-400 mb-2">Budoucí hodnota</p>
+                        <div class="text-4xl md:text-5xl font-extrabold gold-gradient-text leading-tight" id="futureValueDisplay">1 646 515 Kč</div>
                     </div>
-                    <div>
-                        <p class="text-xs font-semibold tracking-wide uppercase text-slate-500 mb-1">Zisk trhu</p>
-                        <p class="text-2xl font-bold text-emerald-premium" id="profitDisplay">+566 515 Kč</p>
+
+                    <div class="grid grid-cols-2 gap-4 border-t border-slate-700 pt-6 mb-8">
+                        <div>
+                            <p class="text-[10px] font-bold tracking-widest uppercase text-slate-500 mb-1">Vložené peníze</p>
+                            <p class="text-xl font-bold text-white" id="cashValueDisplay">1 080 000 Kč</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold tracking-widest uppercase text-slate-500 mb-1">Zisk trhu</p>
+                            <p class="text-xl font-bold text-emerald-premium" id="profitDisplay">+566 515 Kč</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
+                        <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+                            <span>Máš na <span id="targetCarNameText" class="text-white">G-Wagon</span>:</span>
+                            <span id="targetPercentDisplay" class="font-extrabold text-white text-base">43 %</span>
+                        </div>
+                        <div class="w-full h-4 progress-bg rounded-full overflow-hidden mb-2 shadow-inner">
+                            <div class="h-full progress-fill" id="progressBar" style="width: 43%"></div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 text-center font-medium">Chybí ti: <span id="targetMissingDisplay" class="text-slate-300">2 153 485 Kč</span></p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="lg:col-span-1 flex flex-col gap-8">
-            <div class="card-premium rounded-2xl p-8 border border-slate-800 shadow-2xl">
-                <h3 class="text-xl font-bold uppercase tracking-wide mb-8 text-white">Tvůj Cíl</h3>
-                
-                <div class="flex items-center gap-4 mb-6">
-                    <img src="https://images.unsplash.com/photo-1621689025170-c081e7d23d91?q=80&w=400&auto=format&fit=crop" alt="G-Wagon" class="w-20 h-20 object-cover rounded-xl border border-slate-700">
-                    <div>
-                        <p class="text-lg font-bold text-white leading-tight">Mercedes-Benz G 400d</p>
-                        <p class="text-sm text-slate-400">Cena: ~3 800 000 Kč (modelový příklad)</p>
-                    </div>
-                </div>
-
-                <div class="mb-2 flex items-center justify-between text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    <span>Máš naspořeno na cíl:</span>
-                    <span id="targetPercentDisplay" class="font-bold text-white text-base">43 %</span>
-                </div>
-                <div class="w-full h-3 progress-bg rounded-full overflow-hidden mb-2">
-                    <div class="h-full progress-fill" id="progressBar" style="width: 43%"></div>
-                </div>
-                <p class="text-xs text-slate-600 text-center">Chybí ti: <span id="targetMissingDisplay">2 153 485 Kč</span></p>
-            </div>
-
-            <div id="leadFormContainer" class="bg-gold-gradient rounded-2xl p-8 border border-yellow-600 shadow-3xl text-center">
-                <h3 class="text-2xl font-extrabold uppercase tracking-tight text-slate-950 mb-3">Chceš detailní plán?</h3>
-                <p class="text-sm text-slate-800 mb-6 font-medium">Zanech kontakt a analytici <span class="font-bold">Investony</span> ti ukážou přesnou mapu, jak tento model replikovat.</p>
+        <div class="flex flex-col h-full">
+            <div id="leadFormContainer" class="bg-gold-gradient rounded-2xl p-6 md:p-8 shadow-2xl flex-grow flex flex-col justify-center">
+                <h3 class="text-2xl font-extrabold uppercase tracking-tighter text-slate-950 mb-2">Chceš plný plán?</h3>
+                <p class="text-xs text-slate-800 mb-6 font-semibold">Tohle byla teorie. Zadej kontakt a analytici <span class="font-bold">Investony</span> ti ukážou přesnou strategii, jak nakoupit aktiva.</p>
                 
                 <form id="leadForm" class="flex flex-col gap-3">
-                    <input type="email" id="email" placeholder="Tvůj pracovní e-mail" required class="w-full bg-white/60 border border-yellow-700/50 rounded-xl px-4 py-3 text-slate-950 font-medium placeholder-slate-700 focus:outline-none focus:ring-2 focus:ring-yellow-900">
+                    <input type="text" id="name" placeholder="Tvé jméno" required class="w-full bg-white/70 border border-yellow-700/50 rounded-xl px-4 py-3 text-slate-950 font-bold placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all">
                     
-                    <label class="flex items-start gap-2 text-left mt-2">
-                        <input type="checkbox" required class="mt-1 w-4 h-4 accent-slate-950 cursor-pointer">
-                        <span class="text-[11px] text-slate-900 leading-tight font-medium">
-                            Souhlasím s předáním kontaktních údajů a kalkulace partnerovi Investona a.s. za účelem nabídky finančních služeb. Beru na vědomí, že investování nese riziko.
+                    <input type="email" id="email" placeholder="E-mail" required class="w-full bg-white/70 border border-yellow-700/50 rounded-xl px-4 py-3 text-slate-950 font-bold placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all">
+                    
+                    <input type="tel" id="phone" placeholder="Telefon (pro analytika)" required class="w-full bg-white/70 border border-yellow-700/50 rounded-xl px-4 py-3 text-slate-950 font-bold placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-950 transition-all">
+                    
+                    <label class="flex items-start gap-2 text-left mt-1 cursor-pointer group">
+                        <input type="checkbox" required class="mt-0.5 w-4 h-4 accent-slate-950 flex-shrink-0">
+                        <span class="text-[10px] text-slate-800 leading-snug font-medium group-hover:text-slate-950 transition-colors">
+                            Souhlasím s předáním údajů partnerovi Investona a.s. pro nabídku služeb. Investování nese riziko.
                         </span>
                     </label>
 
-                    <button type="submit" class="w-full bg-slate-950 text-white py-4 rounded-xl font-bold uppercase tracking-wide text-lg mt-3 transition-transform active:scale-95 hover:bg-black shadow-lg">Získat můj G-Wagon plán</button>
+                    <button type="submit" class="w-full bg-slate-950 text-white py-4 rounded-xl font-extrabold uppercase tracking-widest text-sm mt-2 transition-transform active:scale-95 hover:bg-black shadow-xl">Získat strategii</button>
                 </form>
             </div>
 
-            <div id="successMessage" class="hidden card-premium rounded-2xl p-10 border border-emerald-900 text-center flex-grow flex flex-col items-center justify-center">
-                <svg class="w-20 h-20 text-emerald-500 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <h3 class="text-2xl font-bold text-white mb-3">Poptávka odeslána.</h3>
-                <p class="text-slate-400 text-sm">Tvoje data na vysněných <span id="successTarget" class="text-yellow-400 font-bold"></span> protekla přes API. Analytik Investony se ti ozve do 24 hodin.</p>
+            <div id="successMessage" class="hidden card-premium rounded-2xl p-8 border border-emerald-500/30 text-center flex-grow flex-col items-center justify-center">
+                <svg class="w-16 h-16 text-emerald-500 mb-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <h3 class="text-xl font-extrabold text-white mb-2 uppercase tracking-tight">Odesláno do CRM</h3>
+                <p class="text-slate-400 text-sm font-medium">Tvoje data protekla přes API. Obchodník Investony se ti ozve do 24 hodin.</p>
             </div>
         </div>
     </div>
 
-    <footer class="w-full max-w-7xl text-center mt-12 mb-8 text-xs text-slate-600 border-t border-slate-900 pt-8 px-4">
-        *Ilustrativní modelový scénář "Garáž Investona Klub". Předpokládá stabilní roční zhodnocení portfolia 8 % p.a. (např. prostřednictvím ETF indexu) před zdaněním a poplatky. Historické výnosy nejsou zárukou budoucích. Cílová cena vozu je orientační. Investování je rizikové a můžete přijít o část vložených prostředků. Tato stránka má edukativní a demonstrační charakter.
+    <footer class="w-full max-w-7xl text-center mb-8 text-[10px] text-slate-600 border-t border-slate-800/50 pt-6 px-4 font-medium leading-relaxed">
+        *Ilustrativní modelový scénář "Garáž Investona Klub". Předpokládá stabilní roční zhodnocení portfolia 8 % p.a. (např. prostřednictvím akciových indexů) před zdaněním a poplatky. Historické výnosy nejsou zárukou budoucích. Ceny vozů jsou orientační tržní odhady. Investování na kapitálových trzích je rizikové a můžete přijít o část nebo celý vklad. Tato stránka má čistě edukační a technologicky demonstrační charakter pro účely Proof of Concept.
     </footer>
 
     <script>
+        // DOM Elements
         const dailyInput = document.getElementById('dailyInput');
         const yearsInput = document.getElementById('yearsInput');
         const dailyAmountDisplay = document.getElementById('dailyAmountDisplay');
@@ -164,11 +220,19 @@
         const targetPercentDisplay = document.getElementById('targetPercentDisplay');
         const progressBar = document.getElementById('progressBar');
         const targetMissingDisplay = document.getElementById('targetMissingDisplay');
+        const targetCarNameText = document.getElementById('targetCarNameText');
+        const carRadios = document.querySelectorAll('input[name="carSelect"]');
         
-        // Fyzika trhu: 8% p.a.
+        // Data a Fyzika
         const annualRate = 0.08; 
-        // Cílová cena G-Wagon (G 400d modelový příklad)
-        const gWagonPrice = 3800000;
+        
+        const carsData = {
+            gwagon: { name: "G-Wagon", price: 3800000 },
+            lambo: { name: "Huracán", price: 6500000 },
+            porsche: { name: "Porsche 911", price: 3200000 }
+        };
+
+        let currentTargetPrice = carsData['gwagon'].price;
 
         function formatCurrency(num) {
             return new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(num);
@@ -177,7 +241,7 @@
         function calculate() {
             const daily = parseInt(dailyInput.value);
             const years = parseInt(yearsInput.value);
-            const monthly = daily * 30; // Aproximace měsíce pro UI
+            const monthly = daily * 30; // Aproximace
 
             dailyAmountDisplay.textContent = daily.toLocaleString('cs-CZ') + ' Kč';
             monthlyAmountDisplay.textContent = `= ${monthly.toLocaleString('cs-CZ')} Kč / měsíc`;
@@ -186,38 +250,62 @@
             const months = years * 12;
             const monthlyRate = annualRate / 12;
             
-            // Formula pro složené úročení (pravidelné měsíční vklady)
+            // Složené úročení
             const futureValue = monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
             const cashValue = monthly * months;
             const profit = futureValue - cashValue;
 
-            // Target Car Calculation
-            const percentAchieved = Math.min(100, Math.round((futureValue / gWagonPrice) * 100));
-            const missingAmount = Math.max(0, gWagonPrice - futureValue);
+            // Target logika
+            const percentAchieved = Math.min(100, Math.round((futureValue / currentTargetPrice) * 100));
+            const missingAmount = Math.max(0, currentTargetPrice - futureValue);
 
-            // DOM Update
+            // Render
             futureValueDisplay.textContent = formatCurrency(futureValue);
             cashValueDisplay.textContent = formatCurrency(cashValue);
             profitDisplay.textContent = (profit >= 0 ? '+' : '') + formatCurrency(profit);
             
             targetPercentDisplay.textContent = percentAchieved + ' %';
             progressBar.style.width = percentAchieved + '%';
-            targetMissingDisplay.textContent = formatCurrency(missingAmount);
+            
+            if(missingAmount === 0) {
+                targetMissingDisplay.innerHTML = '<span class="text-emerald-400 font-bold">Máš naspořeno!</span>';
+            } else {
+                targetMissingDisplay.textContent = formatCurrency(missingAmount);
+            }
         }
 
+        // Listenery
         dailyInput.addEventListener('input', calculate);
         yearsInput.addEventListener('input', calculate);
-        calculate(); // Initialize calculation
 
-        // Mock API Handoff (Zde by byl FETCH volání do CRM)
+        carRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const selectedCar = carsData[e.target.value];
+                currentTargetPrice = selectedCar.price;
+                targetCarNameText.textContent = selectedCar.name;
+                calculate();
+            });
+        });
+
+        calculate(); // Init
+
+        // Mock API Form Submit
         document.getElementById('leadForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            //Payload: { email, phone (not in form, but in prompt), daily_amount, years }
+            // PII payload simulace:
+            const payload = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                context_car: targetCarNameText.textContent,
+                context_daily: dailyInput.value,
+                context_years: yearsInput.value
+            };
+            console.log("Odesílám do CRM Investony:", payload);
             
-            document.getElementById('leadFormContainer').classList.add('hidden');
-            document.getElementById('successTarget').textContent = futureValueDisplay.textContent;
+            document.getElementById('leadFormContainer').style.display = 'none';
             document.getElementById('successMessage').classList.remove('hidden');
-            // Zde by byl odeslán event přes GTM/CAPI o kvalifikovaném leadu ze segmentu "Garáž"
+            document.getElementById('successMessage').style.display = 'flex';
         });
     </script>
 </body>
